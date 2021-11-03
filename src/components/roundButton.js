@@ -1,11 +1,13 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import constansts from "../constansts";
 
-const RoundButton = ({content, light=false, style})=>{
-    return <View style={{...styles.roundContainer, ...style, backgroundColor: light ? "transparent" : constansts.defColor}}>
-        {content}
-    </View>
+const RoundButton = ({content, light=false, style, onPress})=>{
+    return <TouchableWithoutFeedback onPress={onPress}>
+                <View style={{...styles.roundContainer, ...style, backgroundColor: light ? "white" : constansts.defColor}}>
+                    {content}
+                </View>
+        </TouchableWithoutFeedback>
 }
 
 const styles = StyleSheet.create({
