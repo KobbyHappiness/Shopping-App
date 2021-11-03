@@ -1,7 +1,8 @@
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, TouchableWithoutFeedback, View, Text, Dimensions } from "react-native";
+import { ScrollView, StyleSheet, TouchableWithoutFeedback, View, Text, Dimensions } from "react-native";
 import {Feather} from '@expo/vector-icons';
 import consts from '../constansts';
+import { SafeAreaView } from "react-native-safe-area-context";
 const screenWidth = Dimensions.get("screen").width;
 
 export const defColor = "rgb(13,20,34)";
@@ -27,10 +28,50 @@ const Home = ()=>{
                 <View style={{width: 20}} />
             </ScrollView>
          </View>
-        <ScrollView style={{flex: 1}}></ScrollView>
+        <ScrollView style={{flex: 1}}>
+            <View style={{paddingHorizontal: consts.spaceX}}>
+                <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Recommended for you</Text>
+                <Text style={{fontFamily: consts.regular, fontSize: 14, color: "#aaa"}}>Based on search</Text>
+            </View>
+            <ScrollView style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
+                <View style={{width: 20}} />
+                {categories.map((item, id)=> <ProductCard key={id} index={id} />)}
+                <View style={{width: 20}} />
+            </ScrollView>
+            <View style={{paddingHorizontal: consts.spaceX, flexDirection: "row", justifyContent: "space-between"}}>
+                <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Top Collection</Text>
+                <Text style={{fontFamily: consts.regular, fontSize: 16, color: "#aaa"}}>See All</Text>
+            </View>
+            <ScrollView style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
+                <View style={{width: 20}} />
+                {categories.map((item, id)=> <ProductCard key={id} index={id} />)}
+                <View style={{width: 20}} />
+            </ScrollView>
+            <View style={{paddingHorizontal: consts.spaceX, flexDirection: "row", justifyContent: "space-between"}}>
+                <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Upcoming Cloths</Text>
+                <Text style={{fontFamily: consts.regular, fontSize: 16, color: "#aaa"}}>See All</Text>
+            </View>
+            <ScrollView style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
+                <View style={{width: 20}} />
+                {categories.map((item, id)=> <ProductCard key={id} index={id} />)}
+                <View style={{width: 20}} />
+            </ScrollView>
+        </ScrollView>
         <BottomNavigation />
     </View>
     )
+}
+
+const ProductCard = ()=>{
+    return <View style={styles.productCard}>
+        <View style={styles.productImage}>
+
+        </View>
+        <View style={{flexDirection: "row", paddingVertical: 10, justifyContent: "space-between"}}>
+            <Text style={{fontFamily: consts.mediumFont, fontSize: 15}}>Winter Huddie</Text>
+            <Text style={{fontFamily: consts.boldFont, fontSize: 15}}>&cent; 250.00</Text>
+        </View>
+    </View>
 }
 
 const CategoryItem = ({label})=>{
