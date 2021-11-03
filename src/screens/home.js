@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, TouchableWithoutFeedback, View, Text, Dimension
 import {Feather} from '@expo/vector-icons';
 import consts from '../constansts';
 import { SafeAreaView } from "react-native-safe-area-context";
+import RoundButton from "../components/roundButton";
+import BottomNavigation from "../components/bottomNavigation";
 const screenWidth = Dimensions.get("screen").width;
 
 const Home = ({navigation})=>{
@@ -82,63 +84,11 @@ const CategoryItem = ({label})=>{
     </TouchableWithoutFeedback>
 }
 
-const RoundButton = ({content, light=false, style})=>{
-    return <View style={{...styles.roundContainer, ...style, backgroundColor: light ? "transparent" : consts.defColor}}>
-        {content}
-    </View>
-}
-
-const BottomNavigation = ()=>{
-    return <View style={styles.navigation}>
-        <View style={styles.navigationWrapper}>
-            <View style={styles.navigationItem}>
-                <Feather name="home" size={25} color="#fff" />
-            </View>
-            <View style={styles.navigationItem}>
-                <Feather name="shopping-bag" size={25} color="#fff" />
-            </View>
-            <View style={styles.navigationItem}>
-                <Feather name="heart" size={25} color="#fff" />
-            </View>
-            <View style={styles.navigationItem}>
-                <Feather name="user" size={25} color="#fff" />
-            </View>
-        </View>
-        <SafeAreaView edges={["bottom"]} />
-    </View>
-}
-
 const styles = StyleSheet.create({
     homeHeader: {
         paddingHorizontal: consts.spaceX,
         flexDirection: "row",
         justifyContent: "space-between"
-    },
-    navigation: {
-        paddingHorizontal: consts.spaceX,
-        backgroundColor: consts.defColor,
-    },
-    navigationWrapper: {
-        paddingTop: 20,
-        flexDirection: "row",
-        justifyContent: "space-around",
-        flexDirection: "row"
-    },
-    navigationItem: {
-        width: 30,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    roundContainer: {
-        width: 50,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: 30,
-        backgroundColor: consts.defColor,
-        borderWidth: 1,
-        borderColor: "#ddd"
     },
     categoryItem: {
         paddingHorizontal: consts.spaceX,

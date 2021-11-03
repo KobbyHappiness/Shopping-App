@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {Feather} from '@expo/vector-icons';
 import consts from "../constansts";
+import RoundButton from "../components/roundButton";
 
 const ProductScreen = ({navigation})=>{
     return <View style={{flex: 1}}>
@@ -14,27 +15,11 @@ const ProductScreen = ({navigation})=>{
     </View>
 }
 
-const RoundButton = ({content, light=false, style})=>{
-    return <View style={{...styles.roundContainer, ...style, backgroundColor: light ? "transparent" : consts.defColor}}>
-        {content}
-    </View>
-}
-
 const styles = StyleSheet.create({
     homeHeader: {
         paddingHorizontal: consts.spaceX,
         flexDirection: "row",
         justifyContent: "space-between"
-    },
-    roundContainer: {
-        width: 50,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: 30,
-        backgroundColor: consts.defColor,
-        borderWidth: 1,
-        borderColor: "#ddd"
     },
 })
 
