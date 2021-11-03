@@ -5,8 +5,6 @@ import consts from '../constansts';
 import { SafeAreaView } from "react-native-safe-area-context";
 const screenWidth = Dimensions.get("screen").width;
 
-export const defColor = "rgb(13,20,34)";
-
 const Home = ({navigation})=>{
     const categories = ["Huddy", "Jacket", "Pants", "Suits"];
 
@@ -85,7 +83,7 @@ const CategoryItem = ({label})=>{
 }
 
 const RoundButton = ({content, light=false, style})=>{
-    return <View style={{...styles.roundContainer, ...style, backgroundColor: light ? "transparent" : defColor}}>
+    return <View style={{...styles.roundContainer, ...style, backgroundColor: light ? "transparent" : consts.defColor}}>
         {content}
     </View>
 }
@@ -118,7 +116,7 @@ const styles = StyleSheet.create({
     },
     navigation: {
         paddingHorizontal: consts.spaceX,
-        backgroundColor: defColor,
+        backgroundColor: consts.defColor,
     },
     navigationWrapper: {
         paddingTop: 20,
@@ -138,7 +136,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 30,
-        backgroundColor: defColor,
+        backgroundColor: consts.defColor,
         borderWidth: 1,
         borderColor: "#ddd"
     },
