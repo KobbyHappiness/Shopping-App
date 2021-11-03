@@ -7,7 +7,7 @@ const screenWidth = Dimensions.get("screen").width;
 
 export const defColor = "rgb(13,20,34)";
 
-const Home = ()=>{
+const Home = ({navigation})=>{
     const categories = ["Huddy", "Jacket", "Pants", "Suits"];
 
     return (
@@ -33,27 +33,27 @@ const Home = ()=>{
                 <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Recommended for you</Text>
                 <Text style={{fontFamily: consts.regular, fontSize: 14, color: "#aaa"}}>Based on search</Text>
             </View>
-            <ScrollView style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
+            <ScrollView showsHorizontalScrollIndicator={false} style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
                 <View style={{width: 20}} />
-                {categories.map((item, id)=> <ProductCard key={id} index={id} />)}
+                {categories.map((item, id)=> <ProductCard onPress={()=> navigation.navigate("Product")}  key={id} index={id} />)}
                 <View style={{width: 20}} />
             </ScrollView>
             <View style={{paddingHorizontal: consts.spaceX, flexDirection: "row", justifyContent: "space-between"}}>
                 <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Top Collection</Text>
                 <Text style={{fontFamily: consts.regular, fontSize: 16, color: "#aaa"}}>See All</Text>
             </View>
-            <ScrollView style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
+            <ScrollView showsHorizontalScrollIndicator={false} style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
                 <View style={{width: 20}} />
-                {categories.map((item, id)=> <ProductCard key={id} index={id} />)}
+                {categories.map((item, id)=> <ProductCard onPress={()=> navigation.navigate("Product")}  key={id} index={id} />)}
                 <View style={{width: 20}} />
             </ScrollView>
             <View style={{paddingHorizontal: consts.spaceX, flexDirection: "row", justifyContent: "space-between"}}>
                 <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Upcoming Cloths</Text>
                 <Text style={{fontFamily: consts.regular, fontSize: 16, color: "#aaa"}}>See All</Text>
             </View>
-            <ScrollView style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
+            <ScrollView showsHorizontalScrollIndicator={false} style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
                 <View style={{width: 20}} />
-                {categories.map((item, id)=> <ProductCard key={id} index={id} />)}
+                {categories.map((item, id)=> <ProductCard onPress={()=> navigation.navigate("Product")} key={id} index={id} />)}
                 <View style={{width: 20}} />
             </ScrollView>
         </ScrollView>
@@ -62,8 +62,9 @@ const Home = ()=>{
     )
 }
 
-const ProductCard = ()=>{
-    return <View style={styles.productCard}>
+const ProductCard = ({onPress})=>{
+    return <TouchableWithoutFeedback onPress={onPress}>
+        <View style={styles.productCard}>
         <View style={styles.productImage}>
 
         </View>
@@ -72,6 +73,7 @@ const ProductCard = ()=>{
             <Text style={{fontFamily: consts.boldFont, fontSize: 15}}>&cent; 250.00</Text>
         </View>
     </View>
+    </TouchableWithoutFeedback>
 }
 
 const CategoryItem = ({label})=>{
