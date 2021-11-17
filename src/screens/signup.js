@@ -5,8 +5,46 @@ import {Feather} from '@expo/vector-icons';
 import consts from "../constansts";
 import { SafeAreaView } from "react-native-safe-area-context";
 import constansts from "../constansts";
+import { useState } from "react";
+import { signup } from "../api";
 
 const SignupScreen = ({navigation})=>{
+    const [formData, setFormData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        cpassword: ""
+    });
+
+    const [error, setError] = useState("");
+
+    const emptyField = ()=>{
+        let output = false;
+        Object.values(formData).forEach(value=> {
+            if(value.length < 1) output = true;
+        });
+        return output;
+    }
+
+
+    const handleSubmit = ()=>{
+        const {username, email, password} = formData;
+        if(!emptyField()){
+            if(formData.password === formData.cpassword){
+                signup({name: username, email, password});
+                navigation.navigate("Home");
+            }else{
+                setError("Passwords do not match!")
+                setTimeout(()=> setError(""), 3000)
+            }
+        }else{
+            setError("All fields are required!");
+            setTimeout(()=> setError(""), 3000)
+        }
+    }
+
+    const handleChange = (name, value)=> setFormData({...formData, [name]: value});
+
     return <View style={styles.container}>
         <SafeAreaView edges={["top"]} />
         <View style={styles.homeHeader}>
@@ -16,26 +54,31 @@ const SignupScreen = ({navigation})=>{
              <Text style={{fontSize: 40, fontFamily: constansts.boldFont}}>Create New</Text>
              <Text style={{fontSize: 40, fontFamily: constansts.boldFont}}>Account</Text>
 
-            <View style={{marginTop: 50}}>
+            <View style={{marginTop: 20}}>
+                <View style={{height: 20, alignItems: "center", justifyContent: "center"}}>
+                    <Text style={{textAlign: "center", color: "red", fontFamily: constansts.regularFont}}>{error}</Text>
+                </View>
                 <View style={styles.inputField}>
                     <Text style={{fontFamily: constansts.mediumFont, fontSize: 13}}>Username</Text>
-                    <TextInput style={styles.input} placeholder="John Doe" />
+                    <TextInput value={formData.username} onChangeText={(value)=>handleChange("username", value)} style={styles.input} placeholder="John Doe" />
                 </View>
                 <View style={styles.inputField}>
                     <Text style={{fontFamily: constansts.mediumFont, fontSize: 13}}>Email</Text>
-                    <TextInput style={styles.input} placeholder="johndoe@gmail.com" />
+                    <TextInput value={formData.email} onChangeText={(value)=>handleChange("email", value)} style={styles.input} placeholder="johndoe@gmail.com" />
                 </View>
                 <View style={styles.inputField}>
                     <Text style={{fontFamily: constansts.mediumFont, fontSize: 13}}>Password</Text>
-                    <TextInput secureTextEntry={true} style={styles.input} placeholder="**************" />
+                    <TextInput value={formData.password} onChangeText={(value)=>handleChange("password", value)} secureTextEntry={true} style={styles.input} placeholder="**************" />
                 </View>
                 <View style={styles.inputField}>
                     <Text style={{fontFamily: constansts.mediumFont, fontSize: 13}}>Confirm Password</Text>
-                    <TextInput secureTextEntry={true} style={styles.input} placeholder="**************" />
+                    <TextInput value={formData.cpassword} onChangeText={(value)=>handleChange("cpassword", value)} secureTextEntry={true} style={styles.input} placeholder="**************" />
                 </View>
-                <View style={styles.btn}>
-                    <Text style={{color: "#fff", fontFamily: constansts.mediumFont, fontSize: 18}}>Sign Up</Text>
-                </View>
+                <TouchableWithoutFeedback onPress={handleSubmit}>
+                    <View style={styles.btn}>
+                        <Text style={{color: "#fff", fontFamily: constansts.mediumFont, fontSize: 18}}>Sign Up</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
             <View style={{flexDirection: "row", alignItems: "center", marginVertical: 20, justifyContent: "center"}}>
                     <Text style={{fontFamily: constansts.regularFont}}>Already have an account?</Text>
