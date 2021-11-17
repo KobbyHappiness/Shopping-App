@@ -1,15 +1,14 @@
 import React from "react";
-import { ScrollView, StyleSheet, TouchableWithoutFeedback, View, Text, Dimensions } from "react-native";
+import { ScrollView, StyleSheet, TouchableWithoutFeedback, View, Text, Dimensions, Image } from "react-native";
 import {Feather} from '@expo/vector-icons';
 import consts from '../constansts';
 import { SafeAreaView } from "react-native-safe-area-context";
 import RoundButton from "../components/roundButton";
 import BottomNavigation from "../components/bottomNavigation";
+import database from "../database";
 const screenWidth = Dimensions.get("screen").width;
 
 const Home = ({navigation})=>{
-    const categories = ["Huddy", "Jacket", "Pants", "Suits"];
-
     return (
     <View style={{flex: 1, backgroundColor: "#fff"}}>
          <SafeAreaView edges={["top"]} />
@@ -23,63 +22,51 @@ const Home = ({navigation})=>{
          <View style={{paddingVertical: 30}}>
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
                 <View style={{width: 20}} />
-                <CategoryItem label="All" />
-                {categories.map((item, id)=> <CategoryItem key={id} label={item} />)}
+                <CategoryItem label="All" selected={true} />
+                {database.categories.map((item, id)=> <CategoryItem key={id} label={item} />)}
                 <View style={{width: 20}} />
             </ScrollView>
          </View>
         <ScrollView style={{flex: 1}}>
-            <View style={{paddingHorizontal: consts.spaceX}}>
-                <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Recommended for you</Text>
-                <Text style={{fontFamily: consts.regular, fontSize: 14, color: "#aaa"}}>Based on search</Text>
-            </View>
-            <ScrollView showsHorizontalScrollIndicator={false} style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
-                <View style={{width: 20}} />
-                {categories.map((item, id)=> <ProductCard onPress={()=> navigation.navigate("Product")}  key={id} index={id} />)}
-                <View style={{width: 20}} />
-            </ScrollView>
-            <View style={{paddingHorizontal: consts.spaceX, flexDirection: "row", justifyContent: "space-between"}}>
-                <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Top Collection</Text>
-                <Text style={{fontFamily: consts.regular, fontSize: 16, color: "#aaa"}}>See All</Text>
-            </View>
-            <ScrollView showsHorizontalScrollIndicator={false} style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
-                <View style={{width: 20}} />
-                {categories.map((item, id)=> <ProductCard onPress={()=> navigation.navigate("Product")}  key={id} index={id} />)}
-                <View style={{width: 20}} />
-            </ScrollView>
-            <View style={{paddingHorizontal: consts.spaceX, flexDirection: "row", justifyContent: "space-between"}}>
-                <Text style={{fontFamily: consts.mediumFont, fontSize: 19}}>Upcoming Cloths</Text>
-                <Text style={{fontFamily: consts.regular, fontSize: 16, color: "#aaa"}}>See All</Text>
-            </View>
-            <ScrollView showsHorizontalScrollIndicator={false} style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
-                <View style={{width: 20}} />
-                {categories.map((item, id)=> <ProductCard onPress={()=> navigation.navigate("Product")} key={id} index={id} />)}
-                <View style={{width: 20}} />
-            </ScrollView>
+            {database.categories.map((category)=>{
+                return <View key={category}>
+                    <View style={{paddingHorizontal: consts.spaceX, flexDirection: "row", justifyContent: "space-between"}}>
+                        <Text style={{fontFamily: consts.mediumFont, fontSize: 19, textTransform: "capitalize"}}>{category}</Text>
+                        <Text style={{fontFamily: consts.regular, fontSize: 16, color: "#aaa"}}>See All</Text>
+                    </View>
+                    <ScrollView showsHorizontalScrollIndicator={false} style={{paddingVertical: 15, marginBottom: 10}} horizontal={true}>
+                        <View style={{width: 20}} />
+                        {database.items.filter(i=> i.category === category).map((item)=> {
+                            return <ProductCard data={item} onPress={()=> navigation.navigate("Product", {item})}  key={item.name} index={item.name} />
+                        })}
+                        <View style={{width: 20}} />
+                    </ScrollView>
+                </View>
+            })}
         </ScrollView>
-        <BottomNavigation />
+        <BottomNavigation navigate={navigation.navigate} />
     </View>
     )
 }
 
-const ProductCard = ({onPress})=>{
+const ProductCard = ({onPress, data})=>{
     return <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.productCard}>
         <View style={styles.productImage}>
-
+            <Image source={data.images[0].source} style={{resizeMode: "contain", width: "80%", height: "90%"}} />
         </View>
         <View style={{flexDirection: "row", paddingVertical: 10, justifyContent: "space-between"}}>
-            <Text style={{fontFamily: consts.mediumFont, fontSize: 15}}>Winter Huddie</Text>
-            <Text style={{fontFamily: consts.boldFont, fontSize: 15}}>&cent; 250.00</Text>
+            <Text style={{fontFamily: consts.mediumFont, fontSize: 15}}>{data.name}</Text>
+            <Text style={{fontFamily: consts.boldFont, fontSize: 15, color: "orange"}}>&cent; {data.price.toFixed(2)}</Text>
         </View>
     </View>
     </TouchableWithoutFeedback>
 }
 
-const CategoryItem = ({label})=>{
+const CategoryItem = ({label, selected})=>{
     return <TouchableWithoutFeedback>
-        <View style={styles.categoryItem}>
-            <Text style={{fontFamily: consts.regularFont}}>{label}</Text>
+        <View style={[styles.categoryItem, {backgroundColor: selected ? "orange" : "#f5f5f5"}]}>
+            <Text style={{fontFamily: consts.regularFont, color: selected ? "white" : "black"}}>{label}</Text>
         </View>
     </TouchableWithoutFeedback>
 }
@@ -104,7 +91,9 @@ const styles = StyleSheet.create({
     productImage: {
         height: 280,
         backgroundColor: "#eee",
-        borderRadius: 20
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center"
     }
 })
 
