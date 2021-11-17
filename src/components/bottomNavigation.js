@@ -1,24 +1,32 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import {Feather} from '@expo/vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import consts from "../constansts";
 
-const BottomNavigation = ()=>{
+const BottomNavigation = ({navigate})=>{
     return <View style={styles.navigation}>
         <View style={styles.navigationWrapper}>
-            <View style={styles.navigationItem}>
-                <Feather name="home" size={25} color="#fff" />
-            </View>
-            <View style={styles.navigationItem}>
-                <Feather name="shopping-bag" size={25} color="#fff" />
-            </View>
-            <View style={styles.navigationItem}>
-                <Feather name="heart" size={25} color="#fff" />
-            </View>
-            <View style={styles.navigationItem}>
-                <Feather name="user" size={25} color="#fff" />
-            </View>
+            <TouchableWithoutFeedback onPress={()=> navigate("Home")}>
+                <View style={styles.navigationItem}>
+                    <Feather name="home" size={25} color="#fff" />
+                </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={()=> navigate("Cart")}>
+                <View style={styles.navigationItem}>
+                    <Feather name="shopping-bag" size={25} color="#fff" />
+                </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={()=> navigate("Favorites")}>
+                <View style={styles.navigationItem}>
+                    <Feather name="heart" size={25} color="#fff" />
+                </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={()=> navigate("Login")}>
+                <View style={styles.navigationItem}>
+                    <Feather name="user" size={25} color="#fff" />
+                </View>
+            </TouchableWithoutFeedback>
         </View>
         <SafeAreaView edges={["bottom"]} />
     </View>
