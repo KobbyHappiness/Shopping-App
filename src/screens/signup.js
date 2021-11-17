@@ -64,7 +64,7 @@ const SignupScreen = ({navigation})=>{
                 </View>
                 <View style={styles.inputField}>
                     <Text style={{fontFamily: constansts.mediumFont, fontSize: 13}}>Email</Text>
-                    <TextInput value={formData.email} onChangeText={(value)=>handleChange("email", value)} style={styles.input} placeholder="johndoe@gmail.com" />
+                    <TextInput value={formData.email} onChangeText={(value)=>handleChange("email", value.toLowerCase())} style={styles.input} placeholder="johndoe@gmail.com" />
                 </View>
                 <View style={styles.inputField}>
                     <Text style={{fontFamily: constansts.mediumFont, fontSize: 13}}>Password</Text>
