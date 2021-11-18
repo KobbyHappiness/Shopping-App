@@ -44,7 +44,7 @@ const CartScreen = ({navigation})=>{
                 <Text style={{fontFamily: consts.mediumFont, fontSize: 17}}>Total</Text>
                 <Text style={{fontFamily: consts.boldFont, fontSize: 25}}>&cent; {price.toFixed(2)}</Text>
             </View>}
-            <TouchableWithoutFeedback onPress={()=> navigation.navigate(cart.length < 1 ? "Home" : "Cart")}>
+            <TouchableWithoutFeedback onPress={()=> navigation.navigate(cart.length < 1 ? "Home" : "Checkout")}>
                 <View style={{backgroundColor: "orange", padding: 20, borderRadius: 15, justifyContent: "center", flexDirection: "row"}}>
                     <Text style={{color: "#fff", fontFamily: consts.mediumFont, fontSize: 16}}>{cart.length > 0 ? "Checkout" : "Back to shopping"}</Text>
                 </View>
